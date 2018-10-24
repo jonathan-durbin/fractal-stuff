@@ -3,8 +3,26 @@ def generate_julia(a, b, initial_color_hue, color_scale=10, zoom_level=1, center
                    image_size = (1920, 1080), image_save = True,
                    x_max=2.3, aspect_ratio = 16/9, verbose = True):
 
-    # add a nice comment describing params eventually
+    '''
+    Generate a Julia Set using z = z^2 + c, where c is a + ib
 
+        Parameters:
+            a: number between -2 and 2
+            b: number between -2 and 2
+            initial_color_hue: number between 0 and 1. Specifies the initial coloring based on HSV color model. Corresponds with H
+            color_scale: how rapidly colors change while rendering the julia set
+            zoom_level: any number from 1 to inf. 
+            center_point: point at which the image is centered. bounded by ((-2, -2), (2, 2))
+            max_iter: number of iterations to run on a pixel
+            job: helpful for when generating multiple julia sets. First number that shows up in the image name.
+            directory: directory to save image in. Must be relative to current working directory.
+            image_size: Image size in pixels (tuple)
+            image_save: boolean of whether or not to save the image
+            x_max: don't change this number (2.3)
+            aspect_ratio: ratio between sides of image
+            verbose: whether or not to print information about generation of image
+    '''
+    
     from PIL import Image
     import math
     from datetime import datetime
