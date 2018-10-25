@@ -129,18 +129,8 @@ def print_progress_bar (iteration, total, prefix = '', suffix = '', decimals = 1
         print()
 
 if __name__=="__main__":
-    import random as rn
-    for i in range(25):
-        print(i)
-        hue = rn.random()
-        scale = rn.random()*10
-        generate_julia(-0.834, -0.171, initial_color_hue = hue, color_scale = scale, 
-               zoom_level=1, center_point = (0,0),
-               max_iter = 250, job = i+1, directory = "testing_hue_scale",
-               image_size = (int(1920/2), int(1080/2)), image_save = True,
-               x_max=2.3, aspect_ratio = 16/9, verbose = False)
-    # generate_julia(a = -0.834, b = -0.171, initial_color_hue = 0.41, color_scale = 20,
-    #                zoom_level=1, center_point = (0,0),
-    #                max_iter = 250, job = 13, directory = "testing_hue_scale",
-    #                image_size = (int(1920/2), int(1080/2)), image_save = True,
-    #                x_max=2.3, aspect_ratio = 16/9, verbose = True)
+    generate_julia(a = -0.834, b = -0.171, initial_color_hue = 0.41, color_scale = 20,
+                   zoom_level=1, center_point = (0,0),
+                   max_iter = 250, job = 13, directory = "generated_images",
+                   image_size = (int(1920/2), int(1080/2)), image_save = True,
+                   x_max=2.3, aspect_ratio = 16/9, verbose = True)
