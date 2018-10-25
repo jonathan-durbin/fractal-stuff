@@ -29,4 +29,8 @@ If you have any questions, please let me know.
 
 ### Examples of images
 
+A Julia Set:
 ![Julia Set](https://github.com/jonathan-durbin/fractal-stuff/blob/master/generated_images/job_7_a_-0.834_b_-0.171_color_1_3_9.png "So pretty...")
+
+A Mandelbrot Set:
+![Mandelbrot Set](https://github.com/jonathan-durbin/fractal-stuff/blob/master/generated_images/job_13_inithue_scale_0.5_20.png "So pretty...")
