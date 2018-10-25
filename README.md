@@ -13,6 +13,7 @@ The arguments for the primary function in the script are described below. The se
 Above are only used in `julia.py`
 * `initial_color_hue`: number between 0 and 1. Specifies the initial coloring based on HSV color model. Corresponds with Hue.
 * `color_scale`: how rapidly colors change while rendering the fractal
+Above are for use in a color smoothing algorithm. More info [here](https://stackoverflow.com/questions/369438/smooth-spectrum-for-mandelbrot-set-rendering)
 * `zoom_level`: any number from 1 to inf.
 * `center_point`: point at which the image is centered. Bounded by ((-2, -2), (2, 2))
 * `max_iter`: number of iterations to run on a pixel
@@ -25,3 +26,7 @@ Above are only used in `julia.py`
 * `verbose`: print information about generation of image (boolean)
 
 If you have any questions, please let me know. 
+
+### Examples of images
+
+![Julia Set](https://github.com/jonathan-durbin/fractal-stuff/blob/master/generated_images/job_7_a_-0.834_b_-0.171_color_1_3_9.png "So pretty...")
