@@ -124,7 +124,7 @@ def print_progress_bar (iteration, total, prefix = '', suffix = '', decimals = 1
         print()
 
 if __name__=="__main__":
-    generate_mandelbrot_zoom(initial_color_hue=0.5, color_scale=10, zoom_level=1, max_iter = 250,
-                             center_point = (0,0), job = 12, directory = "generated_images",
+    generate_mandelbrot_zoom(initial_color_hue=0.5, color_scale=20, zoom_level=1, max_iter = 250,
+                             center_point = (0,0), job = 13, directory = "generated_images",
                              image_size = (int(1920/2), int(1080/2)),  image_save = True, 
                              x_max=2.3, aspect_ratio = 16/9, verbose = True)
