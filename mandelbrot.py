@@ -104,6 +104,7 @@ def generate_mandelbrot_zoom(initial_color_hue=0.5, color_scale=10, zoom_level=1
 
 def print_progress_bar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 25, fill = '█'):
     """
+    slightly modified from https://gist.github.com/aubricus/f91fb55dc6ba5557fbab06119420dd6a
     Call in a loop to create terminal progress bar
     @params:
         iteration   - Required  : current iteration (Int)
@@ -117,7 +118,7 @@ def print_progress_bar (iteration, total, prefix = '', suffix = '', decimals = 1
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
     filledLength = int(length * iteration // total)
     bar = fill * filledLength + '-' * (length - filledLength)
-    print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = '\r')
+    print('\r{0} |{1}| {2}% {3}'.format(prefix, bar, percent, suffix), end = '\r')
     # Print New Line on Complete
     if iteration == total: 
         print()
