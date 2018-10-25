@@ -8,20 +8,20 @@ The arguments for the primary function in the script are described below. The se
 ### Parameters
 ##### These are also described within each file.
 
-* a: number between -2 and 2
-* b: number between -2 and 2
+* `a`: number between -2 and 2
+* `b`: number between -2 and 2
 Above are only used in `julia.py`
-* initial_color_hue: number between 0 and 1. Specifies the initial coloring based on HSV color model. Corresponds with Hue.
-* color_scale: how rapidly colors change while rendering the fractal
-* zoom_level: any number from 1 to inf.
-* center_point: point at which the image is centered. Bounded by ((-2, -2), (2, 2))
-* max_iter: number of iterations to run on a pixel
-* job: helpful for when generating multiple fractals. First number that shows up in the image name.
-* directory: directory to save image in. Must be relative to current working directory.
-* image_size: Image size in pixels (tuple)
-* image_save: whether or not to save the image (boolean)
-* x_max: Maximum value on the real axis on which the fractal is defined. Highly recommended that this number (2.3) is not changed.
-* aspect_ratio: ratio between sides of image
-* verbose: print information about generation of image (boolean)
+* `initial_color_hue`: number between 0 and 1. Specifies the initial coloring based on HSV color model. Corresponds with Hue.
+* `color_scale`: how rapidly colors change while rendering the fractal
+* `zoom_level`: any number from 1 to inf.
+* `center_point`: point at which the image is centered. Bounded by ((-2, -2), (2, 2))
+* `max_iter`: number of iterations to run on a pixel
+* `job`: helpful for when generating multiple fractals. First number that shows up in the image name.
+* `directory`: directory to save image in. Must be relative to current working directory.
+* `image_size`: Image size in pixels (tuple)
+* `image_save`: whether or not to save the image (boolean)
+* `x_max`: Maximum value on the real axis on which the fractal is defined. Highly recommended that this number (2.3) is not changed.
+* `aspect_ratio`: ratio between sides of image
+* `verbose`: print information about generation of image (boolean)
 
 If you have any questions, please let me know. 
