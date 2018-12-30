@@ -11,7 +11,7 @@ def generate_julia(a, b, initial_color_hue, color_scale=10, zoom_level=1, center
             b: number between -2 and 2
             initial_color_hue: number between 0 and 1. Specifies the initial coloring based on HSV color model. Corresponds with H
             color_scale: how rapidly colors change while rendering the julia set
-            zoom_level: any number from 1 to inf. 
+            zoom_level: any number from 1 to inf.
             center_point: point at which the image is centered. bounded by ((-2, -2), (2, 2))
             max_iter: number of iterations to run on a pixel
             job: helpful for when generating multiple julia sets. First number that shows up in the image name.
@@ -22,16 +22,16 @@ def generate_julia(a, b, initial_color_hue, color_scale=10, zoom_level=1, center
             aspect_ratio: ratio between sides of image
             verbose: whether or not to print information about generation of image
     '''
-    
+
     from PIL import Image
     import math
     from datetime import datetime
-    
+
     start_time = datetime.now()
-    
+
     if image_size[0]/image_size[1] != aspect_ratio:
         print('Warning: resolution does not match aspect ratio. Resolution: ' + str(image_size))
-    
+
     # Find the boundaries of the complex plane in which the fractal will be generated based on the aspect ratio.
     #    calculate image bounds like normal
     if aspect_ratio > 1:
@@ -40,33 +40,33 @@ def generate_julia(a, b, initial_color_hue, color_scale=10, zoom_level=1, center
         y_max = x_max * aspect_ratio
     x_min = -x_max
     y_min = -y_max
-    
+
     #    zooming, if desired
     x_max = center_point[0] + x_max * 1/zoom_level
     y_max = center_point[1] + y_max * 1/zoom_level
     x_min = center_point[0] + x_min * 1/zoom_level
     y_min = center_point[1] + y_min * 1/zoom_level
-        
+
     # Initialize a black image, load in the pixels of the image to an array 'pixel'
     image = Image.new('RGB', image_size, 'black')
     pixel = image.load()
-    
+
     # Set the scaling factor - the mandelbrot set is defined between -2 and 2, not the pixel size of the image
     x_size = (x_max - x_min)/image.size[0]
     y_size = (y_max - y_min)/image.size[1]
-    
+
     # HSV to RGB conversion
     def hsv2rgb(h,s,v):
         import colorsys
         return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
 
-    # For each pixel in the image, iterate z_next = z^2 + c, 
+    # For each pixel in the image, iterate z_next = z^2 + c,
     #   where z is imaginary and c is the complex coordinate value of that specific pixel
     for x in range(image.size[0]):
-    
+
     # Print the progress bar
         if verbose: print_progress_bar(x+1, image.size[0], 'Percentage complete:', 'Finished.')
-    
+
         for y in range(image.size[1]):
             l = 0 # Initialize the while loop counter
             z = complex((x_min + x * x_size), (y_min + y * y_size))
@@ -77,10 +77,10 @@ def generate_julia(a, b, initial_color_hue, color_scale=10, zoom_level=1, center
                 nsmooth += math.exp(-abs(z_curr))
                 if abs(z_curr) > 2:
                     # hue, saturation, value/brightness
-                    pixel[x,y] = hsv2rgb(h = initial_color_hue + color_scale * (nsmooth/max_iter), s = 0.79, v = 0.59) 
+                    pixel[x,y] = hsv2rgb(h = initial_color_hue + color_scale * (nsmooth/max_iter), s = 0.79, v = 0.59)
                 z_curr = z_curr**2 + c
                 l += 1
-    
+
     # calculate total time in minutes
     total_time = (datetime.now() - start_time).total_seconds()/60
     if verbose: print('fractal created in', round(total_time, 3), 'minutes')
@@ -125,7 +125,7 @@ def print_progress_bar (iteration, total, prefix = '', suffix = '', decimals = 1
     bar = fill * filledLength + '-' * (length - filledLength)
     print('\r{0} |{1}| {2}% {3}'.format(prefix, bar, percent, suffix), end = '\r')
     # Print New Line on Complete
-    if iteration == total: 
+    if iteration == total:
         print()
 
 if __name__=="__main__":
