@@ -1,7 +1,20 @@
-def generate_mandelbrot_zoom(initial_color_hue=0.5, color_scale=10, zoom_level=1, max_iter = 250,
-                   center_point = (0,0), job = None, directory = None,
-                   image_size = (1920, 1080), image_save = True, 
-                   x_max=2.3, aspect_ratio = 16/9, verbose = True):
+# mandelbrot.py
+"""
+File that defines a function for generating mandelbrot sets.
+"""
+
+from PIL import Image
+import math
+from datetime import datetime
+import colorsys
+
+
+def generate_mandelbrot_zoom(
+    initial_color_hue=0.5, color_scale=10, zoom_level=1, max_iter = 250,
+    center_point = (0,0), job = None, directory = None,
+    image_size = (1920, 1080), image_save = True,
+    x_max=2.3, aspect_ratio = 16/9, verbose = True
+    ):
 
     '''
     Generate a Mandelbrot Set using z = z^2 + z, where z starts as a complex number of the coordinates of a pixel
@@ -9,7 +22,7 @@ def generate_mandelbrot_zoom(initial_color_hue=0.5, color_scale=10, zoom_level=1
         Parameters:
             initial_color_hue: number between 0 and 1. Specifies the initial coloring based on HSV color model. Corresponds with H
             color_scale: how rapidly colors change while rendering the julia set
-            zoom_level: any number from 1 to inf. 
+            zoom_level: any number from 1 to inf.
             center_point: point at which the image is centered. bounded by ((-2, -2), (2, 2))
             max_iter: number of iterations to run on a pixel
             job: helpful for when generating multiple julia sets. First number that shows up in the image name.
@@ -20,17 +33,12 @@ def generate_mandelbrot_zoom(initial_color_hue=0.5, color_scale=10, zoom_level=1
             aspect_ratio: ratio between sides of image
             verbose: whether or not to print information about generation of image
     '''
-    
-    from PIL import Image
-    import math
-    from datetime import datetime
-    import colorsys
-    
+
     start_time = datetime.now()
-    
+
     if image_size[0]/image_size[1] != aspect_ratio:
-        print('Warning: resolution does not match aspect ratio. Resolution: ' + str(image_size))
-    
+        print(f'Warning: resolution ({image_size[0]/image_size[1]}) does not match aspect ratio ({aspect_ratio})')
+
     # Find the boundaries of the complex plane in which the fractal will be generated based on the aspect ratio.
     if aspect_ratio > 1:
         y_max = x_max / aspect_ratio
@@ -38,33 +46,29 @@ def generate_mandelbrot_zoom(initial_color_hue=0.5, color_scale=10, zoom_level=1
         y_max = x_max * aspect_ratio
     x_min = -x_max
     y_min = -y_max
-    
+
     x_max = center_point[0] + x_max * 1/zoom_level
     y_max = center_point[1] + y_max * 1/zoom_level
     x_min = center_point[0] + x_min * 1/zoom_level
     y_min = center_point[1] + y_min * 1/zoom_level
-        
+
     # Initialize a black image, load in the pixels of the image to an array 'pixel'
     image = Image.new('RGB', image_size, 'black')
     pixel = image.load()
-    
+
     # Set the scaling factor - the mandelbrot set is defined between -2 and 2, not the pixel size of the image
     x_size = (x_max - x_min)/image.size[0]
     y_size = (y_max - y_min)/image.size[1]
-    
-    # convert HSV to RGB
-    def hsv2rgb(h,s,v):
-        return tuple(round(i*255) for i in colorsys.hsv_to_rgb(h,s,v))
 
-    # For each pixel in the image, iterate z_next = z^2 + z, 
+    # For each pixel in the image, iterate z_next = z^2 + z,
     #   where z is imaginary, starts as that coordinates location in Re / Im space
     for x in range(image.size[0]):
-        
+
         # Print the progress bar
         if verbose: print_progress_bar(x+1, image.size[0], 'Percentage complete:', 'Finished.')
-        
+
         for y in range(image.size[1]):
-            l = 0 # Initialize the while loop counter
+            l = 0 # while loop counter
             z = complex((x_min + x * x_size), (y_min + y * y_size))
             z_curr = z
             while pixel[x,y] == (0,0,0) and l < max_iter:
@@ -75,21 +79,25 @@ def generate_mandelbrot_zoom(initial_color_hue=0.5, color_scale=10, zoom_level=1
 
                 z_curr = z_curr**2 + z
                 l += 1
-    
+
     # calculate the time it took to generate
     total_time = (datetime.now() - start_time).total_seconds()/60
-    
+
     if verbose: print('julia set created in', round(total_time, 4), 'minutes')
-        
+
 # Name of this image:
     if job != None:
-        save_name_list = ['job_' + str(job),
-                          '_inithue_scale_' + str(initial_color_hue) + '_' + str(color_scale),
-                          '.png']
+        save_name_list = [
+            'job_' + str(job),
+            '_inithue_scale_' + str(initial_color_hue) + '_' + str(color_scale),
+            '.png'
+        ]
     else:
-        save_name_list = ['inithue_scale_' + str(initial_color_hue) + '_' + str(color_scale),
-                          '.png']
-    
+        save_name_list = [
+            'inithue_scale_' + str(initial_color_hue) + '_' + str(color_scale),
+            '.png'
+        ]
+
 # Save the image
     save_name = ''.join(save_name_list)
     if image_save:
@@ -101,6 +109,12 @@ def generate_mandelbrot_zoom(initial_color_hue=0.5, color_scale=10, zoom_level=1
             image.save(directory + '/' + save_name)
     else:
         if verbose: print('Will not save the image.')
+
+
+# convert HSV to RGB
+def hsv2rgb(h,s,v):
+    return tuple(round(i*255) for i in colorsys.hsv_to_rgb(h,s,v))
+
 
 def print_progress_bar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 25, fill = '█'):
     """
@@ -120,11 +134,11 @@ def print_progress_bar (iteration, total, prefix = '', suffix = '', decimals = 1
     bar = fill * filledLength + '-' * (length - filledLength)
     print('\r{0} |{1}| {2}% {3}'.format(prefix, bar, percent, suffix), end = '\r')
     # Print New Line on Complete
-    if iteration == total: 
+    if iteration == total:
         print()
 
 if __name__=="__main__":
     generate_mandelbrot_zoom(initial_color_hue=0.5, color_scale=20, zoom_level=1, max_iter = 250,
                              center_point = (0,0), job = 13, directory = "generated_images",
-                             image_size = (int(1920/2), int(1080/2)),  image_save = True, 
+                             image_size = (int(1920/2), int(1080/2)),  image_save = True,
                              x_max=2.3, aspect_ratio = 16/9, verbose = True)
